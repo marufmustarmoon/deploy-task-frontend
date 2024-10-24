@@ -19,6 +19,12 @@ export default function userReducer(state = initialState, action) {
 
     case 'USER_LOGIN_FAILURE':
       return { ...state, loading: false, error: action.payload };
+    
+    case 'CLEAR_LOGIN_ERROR':
+        return {
+          ...state,
+          error: null, 
+        };
 
     case 'USER_LOGOUT':
       return { ...state, isAuthenticated: false, user: null };
@@ -31,6 +37,7 @@ export default function userReducer(state = initialState, action) {
       return { ...state, loading: false, isAuthenticated: true, user: action.payload };
 
     case 'USER_REGISTRATION_FAILURE':
+      console.log(action.payload);
       return { ...state, loading: false, error: action.payload };
 
     default:

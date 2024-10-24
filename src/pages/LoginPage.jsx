@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../redux/actions/userActions';
+import { loginUser,clearError } from '../redux/actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -17,7 +17,11 @@ const LoginPage = () => {
     e.preventDefault();
     dispatch(loginUser(email, password));
   };
-
+   
+  useEffect(() => {
+    // Clear error when the component is mounted
+    dispatch(clearError());
+  }, [dispatch]);
   
   useEffect(() => {
     const timeoutId = setTimeout(() => {

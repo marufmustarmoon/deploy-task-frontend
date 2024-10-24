@@ -34,13 +34,16 @@ export const fetchTasks = () => async (dispatch, getState) => {
 
     dispatch({ type: 'FETCH_TASKS_SUCCESS', payload: data });
   } catch (error) {
+    const errorMessage =
+      error.response?.data?.errors?.[0]?.msg || error.response?.data?.message || error.message;
+      
     if (error.response?.status === 401) {
       // If token is invalid (Unauthorized), log the user out
       dispatch(logoutUser());
     }
     dispatch({
       type: 'FETCH_TASKS_FAILURE',
-      payload: error.response?.data?.message || error.message,
+      payload: errorMessage,
     });
   }
 };
@@ -66,12 +69,15 @@ export const createTask = (taskData) => async (dispatch, getState) => {
 
     dispatch({ type: 'CREATE_TASK_SUCCESS', payload: data });
   } catch (error) {
+    const errorMessage =
+      error.response?.data?.errors?.[0]?.msg || error.response?.data?.message || error.message;
+
     if (error.response?.status === 401) {
       dispatch(logoutUser()); // If token is invalid, log the user out
     }
     dispatch({
       type: 'CREATE_TASK_FAILURE',
-      payload: error.response?.data?.message || error.message,
+      payload: errorMessage,
     });
   }
 };
@@ -97,12 +103,15 @@ export const deleteTask = (taskId) => async (dispatch, getState) => {
 
     dispatch({ type: 'DELETE_TASK_SUCCESS', payload: taskId });
   } catch (error) {
+    const errorMessage =
+      error.response?.data?.errors?.[0]?.msg || error.response?.data?.message || error.message;
+
     if (error.response?.status === 401) {
       dispatch(logoutUser()); // If token is invalid, log the user out
     }
     dispatch({
       type: 'DELETE_TASK_FAILURE',
-      payload: error.response?.data?.message || error.message,
+      payload: errorMessage,
     });
   }
 };
@@ -128,12 +137,15 @@ export const updateTask = (taskId, taskData) => async (dispatch, getState) => {
 
     dispatch({ type: 'UPDATE_TASK_SUCCESS', payload: data });
   } catch (error) {
+    const errorMessage =
+      error.response?.data?.errors?.[0]?.msg || error.response?.data?.message || error.message;
+
     if (error.response?.status === 401) {
       dispatch(logoutUser()); // If token is invalid, log the user out
     }
     dispatch({
       type: 'UPDATE_TASK_FAILURE',
-      payload: error.response?.data?.message || error.message,
+      payload: errorMessage,
     });
   }
 };

@@ -22,7 +22,7 @@ const RegistrationPage = () => {
       email,
       password,
     };
-    
+   
     dispatch(registerUser(userData));
   };
 
