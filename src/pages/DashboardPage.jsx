@@ -12,6 +12,7 @@ const TaskManagementPage = () => {
   const [editedTaskTitle, setEditedTaskTitle] = useState('');
   const [editedTaskDescription, setEditedTaskDescription] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [editedTaskStatus, setEditedTaskStatus] = useState('Open'); 
   const tasksPerPage = 5; 
 
   
@@ -30,11 +31,18 @@ const TaskManagementPage = () => {
 
 
   const handleUpdateTask = (taskId) => {
-    if (editedTaskTitle && editedTaskDescription) {
-      dispatch(updateTask(taskId, { title: editedTaskTitle, description: editedTaskDescription }));
+    if (editedTaskTitle && editedTaskDescription && editedTaskStatus) {
+      dispatch(
+        updateTask(taskId, {
+          title: editedTaskTitle,
+          description: editedTaskDescription,
+          status: editedTaskStatus, 
+        })
+      );
       setEditingTask(null);
       setEditedTaskTitle('');
       setEditedTaskDescription('');
+      setEditedTaskStatus('Open');
     }
   };
 
@@ -113,6 +121,15 @@ const TaskManagementPage = () => {
                         onChange={(e) => setEditedTaskDescription(e.target.value)}
                         className="p-3 border border-gray-300 rounded-md w-full"
                       />
+                      <select
+                          value={editedTaskStatus}
+                          onChange={(e) => setEditedTaskStatus(e.target.value)}
+                          className="p-3 border border-gray-300 rounded-md w-full"
+                        >
+                          <option value="Open">Open</option>
+                          <option value="In-progress">In-progress</option>
+                          <option value="Completed">Completed</option>
+                        </select>
                       <div className="flex space-x-2">
                         <button
                           onClick={() => handleUpdateTask(task.id)}
@@ -126,6 +143,7 @@ const TaskManagementPage = () => {
                         >
                           Cancel
                         </button>
+                        
                       </div>
                     </div>
                   ) : (
